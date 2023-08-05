@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  db:
+    image: mongo:4.4
+    container_name: data_base
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./mongo-volume:/data/db
+    environment:
+      MONGO_INIT-DATABASE: ${DB_NAME}
+      MONGO_INITDB_ROOT_USERNAME: ${DB_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${DB_PASS}
+      MONGO_URL: ${MONGO_URL}
+
+  app:
+    build: '.'
+    container_name: app
+    restart: always
+    env_file:
+      - .env
+    command: "npm start"  
+    depends_on:
+      - db
+    ports:
+      - 3000:3000
+    volumes:
+      - ./mongo-volume:/data/db    
+    environment:
+      MONGO_URL: mongodb://mongo
+  
