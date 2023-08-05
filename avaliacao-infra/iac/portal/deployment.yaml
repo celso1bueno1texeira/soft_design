@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  namespace: dev
+  name: portal
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: portal
+  template:
+    metadata:
+      labels:
+        app: portal
+  spec:
+    containers:
+      - name: portal
+        image: celsinhobueno/painel:latest
+        ports:
+          - containerPort: 80
+        resources:
+          requests:
+            cpu: 4m
+            memory: 25Mi  
+

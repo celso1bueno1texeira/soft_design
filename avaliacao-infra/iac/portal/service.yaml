@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: dev
+  name: portal
+  labels:
+    app: portal
+    tier: app
+spec:
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  selector:
+    app: portal
+    role: master
+    tier: app
